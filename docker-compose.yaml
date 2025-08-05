@@ -1,0 +1,60 @@
+services:
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: "go-test"
+    command: [ "go", "test", "-v", "./..." ]
+    environment:
+      - DB_HOST=test-db:5432
+      - DB_USER_FILE=/run/secrets/test-db-user
+      - DB_PASSWORD_FILE=/run/secrets/test-db-password
+    depends_on:
+      - test-db
+    networks:
+      - test
+    secrets:
+      - test-db-user
+      - test-db-password
+
+  test-db:
+    image: postgres:16-alpine
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_USER_FILE=/run/secrets/test-db-user
+      - POSTGRES_PASSWORD_FILE=/run/secrets/test-db-password
+    expose:
+      - "5432"
+    networks:
+      - test
+    secrets:
+      - test-db-user
+      - test-db-password
+    user: ${DOCKER_USER}
+    volumes:
+      - ./data/test-db/data:/var/lib/postgresql/data
+
+  lint:
+    image: golangci/golangci-lint:v2.3.0
+    entrypoint: [ "golangci-lint" ]
+    command: [ "run" ]
+    environment:
+      - GOCACHE=/.cache/go-build
+      - GOMODCACHE=/.cache/mod
+      - GOLANGCI_LINT_CACHE=/.cache/golangci-lint
+    user: ${DOCKER_USER}
+    working_dir: "/app"
+    volumes:
+      - ./:/app
+      - ${GOCACHE}:/.cache/go-build
+      - ${GOMODCACHE}:/.cache/mod
+      - ${GOLANGCI_LINT_CACHE}:/.cache/golangci-lint
+
+networks:
+  test:
+
+secrets:
+  test-db-user:
+    file: docker/test-db/secrets/user
+  test-db-password:
+    file: docker/test-db/secrets/password
