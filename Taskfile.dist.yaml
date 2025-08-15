@@ -1,0 +1,11 @@
+version: '3'
+
+tasks:
+  lint:
+    cmds:
+      - docker-compose run --rm lint
+
+    test:
+      cmds:
+        - docker-compose run --rm --build test
+        - docker-compose down
