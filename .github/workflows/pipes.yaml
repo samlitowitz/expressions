@@ -62,5 +62,7 @@ jobs:
           export DOCKER_USER=$(id -u):$(id -g)
           export GOMODCACHE=$(go env GOMODCACHE)
           export GOCACHE=$(go env GOCACHE)
-          docker compose run --rm --build test
+          docker compose run test-db
+          docker compose run --build test
           docker compose down
+
