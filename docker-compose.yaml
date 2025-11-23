@@ -11,6 +11,8 @@ services:
       - DB_PASSWORD_FILE=/run/secrets/test-db-password
     depends_on:
       - test-db
+    external_links:
+      - test-db:test-db
     networks:
       - test
     secrets:
