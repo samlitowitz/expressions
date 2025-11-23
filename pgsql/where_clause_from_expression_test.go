@@ -47,7 +47,7 @@ INSERT INTO "test" ("id", "data", "timestamp") VALUES (4, 'four', '2000-01-04 00
 INSERT INTO "test" ("id", "data", "timestamp") VALUES (5, 'five', '2000-01-05 00:00:00');
 `)
 	if err != nil {
-		t.Fatal("sqlite: ", err)
+		t.Fatal("pgsql: ", err)
 	}
 
 	idMap := map[expressions.ID]string{
