@@ -3,7 +3,7 @@ version: '3'
 tasks:
   lint:
     cmds:
-      - docker-compose run --rm lint
+      - golangci-lint run ./...
 
   generate-test-secrets:
     cmds:
