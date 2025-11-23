@@ -2,6 +2,7 @@
 
 [![Go Report Card][goreportcardbadge]][goreportcard]
 [![GoDev](https://img.shields.io/static/v1?label=godev&message=reference&color=00add8)][godev]
+[![Pipes](https://github.com/samlitowitz/expressions/actions/workflows/pipes.yaml/badge.svg?branch=master)](https://github.com/samlitowitz/expressions/actions/workflows/pipes.yaml)
 
 This package is intended to allow the usage of implementation agnostic expressions with a focus on expressions relevant
 to SQL.
