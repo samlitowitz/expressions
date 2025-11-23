@@ -5,7 +5,12 @@ tasks:
     cmds:
       - docker-compose run --rm lint
 
-    test:
-      cmds:
-        - docker-compose run --rm --build test
-        - docker-compose down
+  test-secrets:
+    cmds:
+      - echo "postgres" > ./docker/test-db/secrets/user
+      - openssl rand -base64 32 | tr -dc _A-Z-a-z-0-9 | head -c${1:-32} > ./docker/test-db/secrets/password
+
+  test:
+    cmds:
+      - docker-compose run --rm --build test
+      - docker-compose down
