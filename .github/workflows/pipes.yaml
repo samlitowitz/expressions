@@ -58,9 +58,7 @@ jobs:
       - name: Test
         run: |
           export DOCKER_USER=$(id -u):$(id -g)
-          export GOMODCACHE=$GOPATH/pkg/mod
+          export GOMODCACHE=$(go env GOMODCACHE)
           export GOCACHE=$(go env GOCACHE)
-          mkdir -p $GOMODCACHE
-          mkdir -p $GOCACHE
           ./bin/task generate-test-secrets
           ./bin/task test
