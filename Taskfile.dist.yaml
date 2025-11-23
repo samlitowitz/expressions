@@ -7,5 +7,5 @@ tasks:
 
   test:
     cmds:
-      - docker compose run --rm --build test
-      - docker compose down
+      - docker compose -f docker-compose.dist.yaml run --rm --build test
+      - docker compose -f docker-compose.dist.yaml down
